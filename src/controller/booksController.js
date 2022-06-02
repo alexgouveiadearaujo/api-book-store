@@ -55,7 +55,18 @@ class BookController {
       })
   }
 
+  static getBookCompanyPublish = (req , res) => {
+    const companyPublish = req.query.companyPublish
 
+    books.find({'companyPublish': companyPublish}, {}, (err, books)=>{
+        if(err){
+            res.status(500).send({message: `${err.message} - falhou`})
+        }else{
+            res.status(200).send(books)
+
+        }
+    })
+}
 
 }
 

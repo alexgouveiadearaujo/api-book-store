@@ -2,14 +2,18 @@ import books from "../models/Book.js";
 
 class BookController {
   static getBooks = (req, res) => {
-    books.find((err, books) => {
+    books.find()
+    .populate('author')
+    .exec((err, books) => {
       res.status(200).json(books);
     });
   };
 
   static getBookId= (req, res) =>{
       const id = req.params.id;
-      books.findById(id , (err, book)=>{
+      books.findById(id)
+      .populate('author' , 'name')
+      .exec((err, book)=>{
           if(err){
               res.status(400).send({message:`${err.message} - id não localizado`})
           }else{
